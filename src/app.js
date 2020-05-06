@@ -1,6 +1,6 @@
-const express = require("express");
-const cors = require("cors");
-const { uuid } = require("uuidv4");
+const express = require('express');
+const cors = require('cors');
+const { uuid } = require('uuidv4');
 const Repository = require('./model/Repository');
 const Like = require('./model/Like');
 const { checkExistFields, checkExistInArray } = require('./middlewares/Validators');
@@ -22,7 +22,7 @@ app.use( (req, res, next) => {
 
 app.use('/repositories/:id', checkExistInArray);
 
-app.get("/repositories", (request, response) => {
+app.get('/repositories', (request, response) => {
   const newArr = [];
 
   repositories.forEach(repository => newArr.push(repository.get()));
@@ -30,7 +30,7 @@ app.get("/repositories", (request, response) => {
   return response.json(newArr);
 });
 
-app.post("/repositories", checkExistFields, (request, response) => {
+app.post('/repositories', checkExistFields, (request, response) => {
   const { title, url, techs } = request.body;
 
   const idRepository = uuid();
@@ -42,7 +42,7 @@ app.post("/repositories", checkExistFields, (request, response) => {
   response.json(repository.get());
 });
 
-app.put("/repositories/:id", (request, response) => {
+app.put('/repositories/:id', (request, response) => {
   const index = request.index;
   const { title, url, techs } = request.body;
 
@@ -54,7 +54,7 @@ app.put("/repositories/:id", (request, response) => {
   return response.json(repositories[index].get());
 });
 
-app.delete("/repositories/:id", (request, response) => {
+app.delete('/repositories/:id', (request, response) => {
   const index = request.index;
 
   repositories.splice(index, 1);
@@ -62,7 +62,7 @@ app.delete("/repositories/:id", (request, response) => {
   return response.status(204).send();
 });
 
-app.post("/repositories/:id/like", (request, response) => {
+app.post('/repositories/:id/like', (request, response) => {
   const index = request.index;
 
   repositories[index].likes.addLikes();
